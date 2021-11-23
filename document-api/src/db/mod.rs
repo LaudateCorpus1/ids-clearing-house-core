@@ -274,7 +274,7 @@ impl DataStore {
 
     /// counts documents for a single process from the db
     pub async fn count_documents_for_pid(&self, pid: &String) -> Result<u64> {
-        debug!("Trying to get all documents for pid {}...", pid);
+        debug!("...counting all documents for pid {}...", pid);
         let coll = self.database.collection::<EncryptedDocument>(MONGO_COLL_DOCUMENTS);
         let result = coll.count_documents(Some(doc! { MONGO_PID: pid.clone() }), None).await?;
         Ok(result)

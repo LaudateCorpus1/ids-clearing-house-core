@@ -251,8 +251,13 @@ async fn get_enc_documents_for_pid(
                     // rounded up number of pages
                     let number_of_pages = (number_of_docs + sanitized_size - 1) / sanitized_size;
                     if sanitized_page > number_of_pages {
-                        warn!("...invalid page requested. Falling back to {}.", number_of_pages);
-                        sanitized_page = number_of_pages;
+                        if number_of_pages == 0 {
+                            sanitized_page = 1;
+                        }
+                        else{
+                            sanitized_page = number_of_pages;
+                        }
+                        warn!("...invalid page requested. Falling back to {}.", sanitized_page);
                     }
                 }
                 Err(e) => {
